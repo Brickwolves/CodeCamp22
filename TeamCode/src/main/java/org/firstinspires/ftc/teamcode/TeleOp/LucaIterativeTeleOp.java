@@ -106,17 +106,12 @@ public class LucaIterativeTeleOp extends OpMode {
         //                  DUCK SPINNER                    //
         // CROSS toggles direction
         // CIRCLE controls duck spinner
-        double duckPower = (BC.get(RB1, TOGGLE)) ? 0.6 : -0.6;
-        if (BC.get(CIRCLE, DOWN))   robot.duckSpinner.spin(duckPower);
-        else                        robot.duckSpinner.spin(0);
+
 
         //                  RING DROPPER                    //
         if (BC.get(CROSS, TOGGLE))  robot.dropper.release();
         else                        robot.dropper.hold();
 
-        //                  SWEEPER                         //
-        if (BC.get(TRIANGLE, TOGGLE))   robot.sweeper.down();
-        else                            robot.sweeper.up();
 
 
         //                  DRIVE CONTROLS                  //

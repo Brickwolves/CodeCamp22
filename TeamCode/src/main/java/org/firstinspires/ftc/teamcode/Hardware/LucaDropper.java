@@ -11,8 +11,8 @@ public class LucaDropper implements Dropper {
     private String id;
     private Servo servo;
 
-    private final double DROP_POSITION = 0.5;
-    private final double HOLD_POSITION = 0.0;
+    private final double DROP_POSITION = 0;
+    private final double HOLD_POSITION = 0.4;
 
     public LucaDropper(String id){
         this.id = id;

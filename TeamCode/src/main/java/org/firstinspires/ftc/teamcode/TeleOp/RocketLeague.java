@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.DashConstants.Unfixed;
 import org.firstinspires.ftc.teamcode.Hardware.Controls.Controller;
 
 import static org.firstinspires.ftc.teamcode.Utilities.OpModeUtils.multTelemetry;
@@ -20,16 +22,15 @@ public class RocketLeague extends OpMode {
 
     // Declare OpMode members.
 
-    private ElapsedTime boostCooldown = new ElapsedTime();
-    private ElapsedTime boostTime = new ElapsedTime();
+    private ElapsedTime time = new ElapsedTime();
     public Mecanum robot;
     Controller controller;
     Controller controller2;
-    public CRServo duck;
     IMU imu;
     Color_Sensor color;
-    public double boost = 0;
-    double red;
+    public boolean boost = false;
+    public boolean slow = false;
+    public boolean spin = false;
     boolean rumbled = false;
 
     /*
@@ -45,7 +46,6 @@ public class RocketLeague extends OpMode {
         color = new Color_Sensor();
         imu = new IMU("imu");
         color.init("color");
-        red = color.updateRed();
 
 
         multTelemetry.addData("Status", "Initialized");
@@ -72,7 +72,7 @@ public class RocketLeague extends OpMode {
      */
     @Override
     public void start() {
-        boostCooldown.reset();
+
 
 
 
@@ -90,34 +90,47 @@ public class RocketLeague extends OpMode {
     @Override
     public void loop() {
 
-        //Boost Stuff
 
-        if(color.updateRed()>red+1000 && boostCooldown.seconds() > 2.0 && boost < 3){
-            boost = boost + 1;
-            boostCooldown.reset();
-        }
-
-
-
-        if(boost > 2 && controller.RB.press()){
-            boostTime.reset();
-            boost = 0;
-            rumbled = false;
-        }
-
-        if(!rumbled && boost > 2){
-            rumbled = true;
-            controller.gamepad.rumble(1000);
-        }
-
-        double power = .4;
+        double power = .7;
         double drive = MathUtils.shift(controller.leftStick(), imu.getAngle()).y;
         double strafe = -MathUtils.shift(controller.leftStick(), imu.getAngle()).x;
         double turn = -controller.rightStick().x;
 
-        if(boostTime.seconds()<1){
-            power = 1;
+        //Boost Stuff
+
+        if(time.seconds() > 2) {
+            spin = false;
+            slow = false;
+            boost = false;
+            if (color.updateGreen() > Unfixed.whiteGreen && color.updateRed() > Unfixed.whiteRed && color.updateBlue() > Unfixed.whiteBlue) {
+                spin = true;
+                time.reset();
+            } else if (color.updateBlue() > Unfixed.blue) {
+                slow = true;
+                time.reset();
+            } else if (color.updateRed() > Unfixed.red) {
+                boost = true;
+                time.reset();
+            }
+        }else{
+            if(spin = true){
+                power = 1;
+                drive = 0;
+                strafe = 0;
+                turn = 1;
+            }else if(slow = true){
+                power = .2;
+            }else if(boost = true){
+                power = 1;
+            }
         }
+
+
+
+
+
+
+
 
         robot.setDrivePower(power, strafe, turn, drive);
 
