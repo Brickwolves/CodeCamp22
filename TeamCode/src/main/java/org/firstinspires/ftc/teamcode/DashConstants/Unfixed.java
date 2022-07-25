@@ -4,5 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class Unfixed {
-    public static double duckSpeed = .6;
+    public static double BLUE = 200;
+    public static double RED = 200;
+
 }

@@ -16,19 +16,13 @@ import org.firstinspires.ftc.teamcode.Controls.Controller;
 import org.firstinspires.ftc.teamcode.DashConstants.Unfixed;
 import org.firstinspires.ftc.teamcode.Hardware.RobotKart;
 
-@TeleOp(name="Mariokart", group="Iterative Opmode")
-public class MarioKart extends OpMode {
+@TeleOp(name="Driver TeleOp", group="Iterative Opmode")
+public class DriverTeleOp extends OpMode {
 
     // Declare OpMode members.
     private ElapsedTime time = new ElapsedTime();
     public RobotKart robot;
     Controller controller;
-
-    public boolean boost = false;
-    public boolean slow = false;
-    public boolean spin = false;
-    public boolean wasWhite = false;
-    boolean rumbled = false;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -90,35 +84,6 @@ public class MarioKart extends OpMode {
         double strafe = controller.get(LEFT, INVERT_X);
         double turn = controller.get(RIGHT, X);
 
-        /**
-         * Boosts last 2 seconds, logic for listening for boosts
-         */
-        if(time.seconds() > 2) {
-            spin = false;
-            slow = false;
-            boost = false;
-
-            if (robot.color_sensor.updateBlue() > Unfixed.BLUE) {
-                slow = true;
-                time.reset();
-                controller.rumble(1);
-            } else if (robot.color_sensor.updateRed() > Unfixed.RED) {
-                boost = true;
-                time.reset();
-               controller.rumble(1);
-            }
-
-        /**
-         *  We are currently in a boost or have a boost
-         */
-        }else{
-            if(slow){
-                power = .2;
-            }else if(boost){
-                power = 1;
-            }
-        }
-
 
         robot.drivetrain.setDrivePower(power, strafe, turn, drive);
 
@@ -127,7 +92,6 @@ public class MarioKart extends OpMode {
          ----------- L O G G I N G -----------
                                             */
         multTelemetry.addData("Status", "TeleOp Running");
-        multTelemetry.addData("Boost", boost);
         multTelemetry.addData("Red", robot.color_sensor.getRedCacheValue());
         multTelemetry.addData("Blue", robot.color_sensor.getBlueCacheValue());
         multTelemetry.addData("Green", robot.color_sensor.getGreenCacheValue());

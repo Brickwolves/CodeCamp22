@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Controls.Controller;
 import org.firstinspires.ftc.teamcode.Utilities.OpModeUtils;
 import org.firstinspires.ftc.teamcode.Controls.ButtonControls;
 
@@ -60,7 +61,7 @@ public class ServoDiagnostic extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            ButtonControls.update();
+            Controller.update();
 
             if (BC.get(DPAD_UP, DOWN)) {
                 servo.setPosition(SERVO_MAX);
