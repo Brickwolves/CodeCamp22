@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Controls.Controller;
 import org.firstinspires.ftc.teamcode.DashConstants.Unfixed;
 import org.firstinspires.ftc.teamcode.Hardware.RobotKart;
 
-@TeleOp(name="Mariokart", group="Iterative Opmode")
+@TeleOp(name="MarioKart", group="Iterative Opmode")
 public class MarioKart extends OpMode {
 
     // Declare OpMode members.

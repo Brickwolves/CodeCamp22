@@ -13,10 +13,6 @@ public class RobotKart {
         drivetrain = new Mecanum();
         imu = new IMU("imu");
         color_sensor = new Color_Sensor();
-
         color_sensor.init("color");
-
     }
-
-
 }
