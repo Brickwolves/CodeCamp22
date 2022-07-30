@@ -121,43 +121,43 @@ public class Mecanum {
         setAllPower(0);
     }
 
-    /**
-     * Rotates the robot autonomously a certain number of degrees
-     * @param degrees
-     * @param current_angle
-     */
-    public void turn(double degrees, double current_angle){
-
-        /** TODO: Making a turn() method
-         * 1)   Make a PID attribute in the Mecanum class named rotationalPID
-         * 2)   Instantiate it in the initMecanum() method
-         * 3)   Declare and instatiate a new ElapsedTime at top of turn() method
-         * 4)   Use closestAngle() method w/ degrees & current_angle as parameters to calculate
-         *      the actual angle we should be going to
-         * 5)   Make a while-loop lasting 1 second (up to you how long)
-         *      A)  Inside the while-loop update the rotationalPID with the difference between
-         *          the degrees and the current_angle.
-         *      B)  Supply the resulting PID return-value to the setDrivePower() method where
-         *          all parameters are 0.0, EXCEPT for the turn and power parameters. The turn
-         *          parameter should be set to the PID return-value and the power should be set to
-         *          1.0.
-         *      C)  Log out the current angle and your target angle using the multTelemetry's
-         *          addData() and update() method!
-         * 6)   After the while-loop use setAllPower() method to set all motors to a power of 0.0
+        /**
+         * Rotates the robot autonomously a certain number of degrees
+         * @param degrees
+         * @param current_angle
          */
+        public void turn(double degrees, double current_angle){
 
-        ElapsedTime timer = new ElapsedTime();
-        timer.reset();
+            /** TODO: Making a turn() method
+             * 1)   Make a PID attribute in the Mecanum class named rotationalPID
+             * 2)   Instantiate it in the initMecanum() method
+             * 3)   Declare and instatiate a new ElapsedTime at top of turn() method
+             * 4)   Use closestAngle() method w/ degrees & current_angle as parameters to calculate
+             *      the actual angle we should be going to
+             * 5)   Make a while-loop lasting 1 second (up to you how long)
+             *      A)  Inside the while-loop update the rotationalPID with the difference between
+             *          the degrees and the current_angle.
+             *      B)  Supply the resulting PID return-value to the setDrivePower() method where
+             *          all parameters are 0.0, EXCEPT for the turn and power parameters. The turn
+             *          parameter should be set to the PID return-value and the power should be set to
+             *          1.0.
+             *      C)  Log out the current angle and your target angle using the multTelemetry's
+             *          addData() and update() method!
+             * 6)   After the while-loop use setAllPower() method to set all motors to a power of 0.0
+             */
 
-        degrees = closestAngle(degrees, current_angle);
+            ElapsedTime timer = new ElapsedTime();
+            timer.reset();
 
-        while (timer.seconds() < 1){
-            // double turn = rotationalPID.update(degrees - current_angle);
+            degrees = closestAngle(degrees, current_angle);
 
-            setDrivePower(0, 0, 0.3, 1.0);
+            while (timer.seconds() < 1){
+                // double turn = rotationalPID.update(degrees - current_angle);
+
+                setDrivePower(0, 0, 0.3, 1.0);
+            }
+            setAllPower(0);
         }
-        setAllPower(0);
-    }
 
 
     /**
